@@ -3,60 +3,67 @@ package src;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Main console interface for Late-Night Food Finder.
- * Manages user input prompts and safe error handling.
- */
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<FoodSpot> allSpots = FoodRepository.getInitialSpots();
 
-        System.out.println("=== Late-Night Food Finder (Purdue MVP) ===");
+        System.out.println("=== Purdue Late-Night Food Finder ===");
 
-        // Safe budget prompt using try/catch to prevent crashes on invalid text
-        double maxBudget = -1;
-        while (maxBudget < 0) {
-            System.out.print("Enter your maximum budget (e.g., 15.00): ");
-            String input = scanner.nextLine().trim();
-            try {
-                maxBudget = Double.parseDouble(input);
-                if (maxBudget < 0) {
-                    System.out.println("Budget cannot be negative. Try again.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number format. Please enter a valid amount.");
-            }
+        double maxBudget = getValidDouble(scanner, "Enter your max budget ($): ");
+        int maxWalkMinutes = getValidInt(scanner, "Enter max walking time (minutes): ");
+
+        System.out.print("Dietary preference (Vegetarian, Halal, or Any): ");
+        String dietaryPreference = scanner.nextLine().trim();
+        if (dietaryPreference.isEmpty()) {
+            dietaryPreference = "Any";
         }
 
-        // Safe walking time prompt using try/catch
-        int maxWalk = -1;
-        while (maxWalk < 0) {
-            System.out.print("Enter your maximum walking time in minutes (e.g., 10): ");
-            String input = scanner.nextLine().trim();
-            try {
-                maxWalk = Integer.parseInt(input);
-                if (maxWalk < 0) {
-                    System.out.println("Walking time cannot be negative. Try again.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid integer format. Please enter a valid number of minutes.");
-            }
-        }
+        List<FoodSpot> results = FoodFilter.filterSpots(allSpots, maxBudget, maxWalkMinutes, dietaryPreference);
 
-        // Run filter logic
-        List<FoodSpot> results = FoodFilter.filterByBudgetAndWalkTime(allSpots, maxBudget, maxWalk);
-
-        // Display results
-        System.out.println("\n--- Matching Late-Night Spots ---");
+        System.out.println("\n--- Matching Late-Night Food Spots ---");
         if (results.isEmpty()) {
-            System.out.println("No late-night spots matched your budget and walk time.");
+            System.out.println("No late-night spots matched your criteria.");
         } else {
             for (FoodSpot spot : results) {
-                System.out.println("- " + spot);
+                System.out.println(spot);
             }
         }
 
         scanner.close();
+    }
+
+    private static double getValidDouble(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            try {
+                double value = Double.parseDouble(input);
+                if (value < 0) {
+                    System.out.println("Please enter a positive amount.");
+                } else {
+                    return value;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number (e.g., 10.50).");
+            }
+        }
+    }
+
+    private static int getValidInt(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            try {
+                int value = Integer.parseInt(input);
+                if (value < 0) {
+                    System.out.println("Please enter a positive number of minutes.");
+                } else {
+                    return value;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a whole number (e.g., 10).");
+            }
+        }
     }
 }
