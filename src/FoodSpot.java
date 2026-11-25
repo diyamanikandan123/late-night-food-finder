@@ -1,30 +1,43 @@
 package src;
 
-/**
- * Represents an individual late-night food location on campus.
- * Stores core attributes for budget and walking-time filtering.
- */
 public class FoodSpot {
     private String name;
-    private double averagePrice;
+    private double avgPrice;
     private int walkMinutes;
     private String closingTime;
+    private String dietaryTag;
 
-    public FoodSpot(String name, double averagePrice, int walkMinutes, String closingTime) {
+    public FoodSpot(String name, double avgPrice, int walkMinutes, String closingTime, String dietaryTag) {
         this.name = name;
-        this.averagePrice = averagePrice;
+        this.avgPrice = avgPrice;
         this.walkMinutes = walkMinutes;
         this.closingTime = closingTime;
+        this.dietaryTag = dietaryTag;
     }
 
-    public String getName() { return name; }
-    public double getAveragePrice() { return averagePrice; }
-    public int getWalkMinutes() { return walkMinutes; }
-    public String getClosingTime() { return closingTime; }
+    public String getName() {
+        return name;
+    }
+
+    public double getAvgPrice() {
+        return avgPrice;
+    }
+
+    public int getWalkMinutes() {
+        return walkMinutes;
+    }
+
+    public String getClosingTime() {
+        return closingTime;
+    }
+
+    public String getDietaryTag() {
+        return dietaryTag;
+    }
 
     @Override
     public String toString() {
-        return name + " - $" + String.format("%.2f", averagePrice) + 
-               " | " + walkMinutes + " min walk | Closes at " + closingTime;
+        return String.format("%s | Avg: $%.2f | Walk: %d min | Closes: %s | Dietary: %s",
+                name, avgPrice, walkMinutes, closingTime, dietaryTag);
     }
 }

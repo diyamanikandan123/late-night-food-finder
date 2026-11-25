@@ -3,19 +3,21 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Handles filtering campus food spots based on user criteria.
- * Single-responsibility class dedicated solely to filter algorithms.
- */
 public class FoodFilter {
-    
-    public static List<FoodSpot> filterByBudgetAndWalkTime(List<FoodSpot> spots, double maxBudget, int maxWalkMinutes) {
-        List<FoodSpot> filtered = new ArrayList<>();
+    public static List<FoodSpot> filterSpots(List<FoodSpot> spots, double maxBudget, int maxWalkMinutes, String dietaryPreference) {
+        List<FoodSpot> matchingSpots = new ArrayList<>();
+
         for (FoodSpot spot : spots) {
-            if (spot.getAveragePrice() <= maxBudget && spot.getWalkMinutes() <= maxWalkMinutes) {
-                filtered.add(spot);
+            boolean withinBudget = spot.getAvgPrice() <= maxBudget;
+            boolean withinWalkTime = spot.getWalkMinutes() <= maxWalkMinutes;
+            boolean matchesDiet = dietaryPreference.equalsIgnoreCase("Any")
+                    || spot.getDietaryTag().equalsIgnoreCase(dietaryPreference);
+
+            if (withinBudget && withinWalkTime && matchesDiet) {
+                matchingSpots.add(spot);
             }
         }
-        return filtered;
+
+        return matchingSpots;
     }
 }
