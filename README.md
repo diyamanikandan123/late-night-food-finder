@@ -24,3 +24,6 @@ The application separates data, filtering logic, and user interaction across fou
    ```bash
    git clone [https://github.com/diyamanikandan123/late-night-food-finder.git](https://github.com/diyamanikandan123/late-night-food-finder.git)
    cd late-night-food-finder
+
+## Demo
+[Video Walkthrough](https://drive.google.com/file/d/1hywib1rNnp8ucXODp1zhCE934sHL0akC/view?usp=drive_link)
