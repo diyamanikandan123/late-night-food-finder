@@ -1,23 +1,26 @@
 # Late-Night Food Finder
+A Java console application that helps Purdue students quickly locate late-night campus food spots based on budget, walking distance, and dietary preferences.
 
-## Project Goal
-The Late-Night Food Finder is a Java console application designed to help students quickly locate late-night food options on campus based on their specific budget constraints and maximum walking time.
+## The Problem
+When studying late on campus, students (including me) often struggle to find open food options that fit a tight budget, a short walk in the cold, and specific dietary needs (like Vegetarian or Halal) all at once. This tool solves that by filtering local late-night spots against all three constraints in seconds.
 
-## MVP Scope
-The Minimum Viable Product (MVP) includes:
-- Parsing local restaurant data from a `restaurants.csv` file into Java objects.
-- Prompting the user in the terminal for their maximum budget and walking distance.
-- Filtering the dataset using conditional logic.
-- Outputting matching late-night food spots to the console.
+## How It Works
+The application separates data, filtering logic, and user interaction across four Java classes:
+* **`FoodSpot.java`**: Models a restaurant with its name, average price, walking time, closing time, and dietary tag.
+* **`FoodRepository.java`**: Stores and supplies the dataset of campus food spots *(updated from the initial `restaurants.csv` plan to an in-memory repository for a self-contained MVP)*.
+* **`FoodFilter.java`**: Filters the restaurant list using case-insensitive checks for max budget, max walk time, and dietary preference.
+* **`Main.java`**: Handles terminal prompts via `Scanner` and prevents crashes on invalid input using `try-catch` loops.
 
-## Future Plans (Schedule Quadrant)
-Features planned for post-MVP iterations include:
-- Real-time API integration for current menu prices and operating hours.
-- Graphical User Interface (GUI) built with JavaFX or Swing.
-- User reviews and dietary preference filtering (vegan, gluten-free, halal).
+![System Diagram](SystemDiagram.drawio.png)
 
 ## Tech Stack
-- **Language:** Java
-- **Tools:** IntelliJ IDEA, Git, GitHub
-- **Data Format:** CSV
-- **Diagramming:** draw.io
+* **Language:** Java
+* **Data Storage:** In-memory Java collections (`ArrayList`, `List`)
+* **Tools:** IntelliJ IDEA, Git, GitHub
+* **Diagramming:** draw.io
+
+## Setup & Installation
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/diyamanikandan123/late-night-food-finder.git](https://github.com/diyamanikandan123/late-night-food-finder.git)
+   cd late-night-food-finder
